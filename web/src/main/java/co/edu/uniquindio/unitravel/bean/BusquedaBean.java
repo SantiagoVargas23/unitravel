@@ -1,6 +1,7 @@
 package co.edu.uniquindio.unitravel.bean;
 
 import co.edu.uniquindio.unitravel.entidades.Hotel;
+import co.edu.uniquindio.unitravel.servicios.UnitravelServicio;
 import co.edu.uniquindio.unitravel.servicios.UsuarioServicio;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,13 +27,16 @@ public class BusquedaBean implements Serializable {
     @Autowired
     private UsuarioServicio usuarioServicio;
 
+    @Autowired
+    private UnitravelServicio unitravelServicio;
+
     @Getter @Setter
     private List<Hotel> hoteles;
 
     @PostConstruct
-    public void inicializar(){
+    public void inicializar() throws Exception {
         if (busquedaParam != null && !busquedaParam.isEmpty()) {
-            hoteles = usuarioServicio.buscarHotelesNombre(busquedaParam);
+            hoteles = unitravelServicio.buscarHotelesNombre(busquedaParam);
         }
 
     }

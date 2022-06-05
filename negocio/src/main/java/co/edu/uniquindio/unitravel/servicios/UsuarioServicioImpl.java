@@ -1,10 +1,7 @@
 package co.edu.uniquindio.unitravel.servicios;
 
 import co.edu.uniquindio.unitravel.entidades.*;
-import co.edu.uniquindio.unitravel.repositorios.ComentarioRepo;
-import co.edu.uniquindio.unitravel.repositorios.HotelRepo;
-import co.edu.uniquindio.unitravel.repositorios.ReservaRepo;
-import co.edu.uniquindio.unitravel.repositorios.UsuarioRepo;
+import co.edu.uniquindio.unitravel.repositorios.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,21 +10,24 @@ import java.util.Optional;
 @Service
 public class UsuarioServicioImpl implements UsuarioServicio {
 
-
     private UsuarioRepo usuarioRepo;
     private ComentarioRepo comentarioRepo;
     private ReservaRepo reservaRepo;
     private HotelRepo hotelRepo;
     private EmailServicio emailServicio;
 
+    private CiudadRepo ciudadRepo;
+
 
     public UsuarioServicioImpl(UsuarioRepo usuarioRepo, ComentarioRepo comentarioRepo,
-                               ReservaRepo reservaRepo, HotelRepo hotelRepo, EmailServicio emailServicio){
+                               ReservaRepo reservaRepo, HotelRepo hotelRepo, EmailServicio emailServicio,
+                                    CiudadRepo ciudadRepo){
 
         this.usuarioRepo= usuarioRepo;
         this.comentarioRepo=comentarioRepo;
         this.reservaRepo = reservaRepo;
         this.hotelRepo = hotelRepo;
+        this.ciudadRepo = ciudadRepo;
         this.emailServicio = emailServicio;
     }
 
@@ -88,16 +88,7 @@ public class UsuarioServicioImpl implements UsuarioServicio {
         return usuarioRepo.findAll();
     }
 
-    @Override
-    public Usuario validarLogin(String correo, String password) throws Exception {
-        Optional<Usuario> usuario = usuarioRepo.findByCorreoAndPassword(correo,password);
 
-        if (usuario.isEmpty()){
-            throw new Exception("los datos de autenticacion son incorrectos");
-        }
-
-        return usuario.get();
-    }
 
     @Override
     public Comentario crearComentario(Comentario comentario) throws Exception {
@@ -217,15 +208,6 @@ public class UsuarioServicioImpl implements UsuarioServicio {
         return reservaRepo.findById(codReserva).orElse(null);
     }
 
-    @Override
-    public List<Hotel> buscarHotelesCiudad(String nombreCiudad) {
-        return hotelRepo.obtenerHoteles(nombreCiudad);
-    }
-
-    @Override
-    public List<Hotel> buscarHotelesNombre(String nombre){
-        return hotelRepo.obtenerHotelesNombre(nombre);
-    }
 
     @Override
     public List<Reserva> listarReservas(String emailUsuario) {

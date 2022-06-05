@@ -4,7 +4,9 @@ import co.edu.uniquindio.unitravel.entidades.*;
 
 import java.util.List;
 
+
 public interface UsuarioServicio {
+
 
     Usuario registrarUsuario(Usuario usuario) throws Exception;
 
@@ -15,8 +17,6 @@ public interface UsuarioServicio {
     void eliminarUsuario(String cedula) throws Exception;
 
     List<Usuario> listarUsuario()  ;
-
-    Usuario validarLogin(String correo, String password) throws Exception;
 
     Comentario crearComentario(Comentario comentario) throws Exception;
 
@@ -29,11 +29,6 @@ public interface UsuarioServicio {
     Reserva modificarReserva(Reserva reserva) throws Exception;
 
     Reserva obtenerReserva(int codReserva) throws  Exception;
-
-    List<Hotel> buscarHotelesCiudad(String nombreCiudad);
-
-    List<Hotel> buscarHotelesNombre(String nombre);
-
 
     List<Reserva> listarReservas(String emailUsuario);
 

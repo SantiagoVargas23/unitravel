@@ -28,7 +28,7 @@ public class Habitacion implements Serializable {
 
     @ToString.Include
     @Column(nullable = false)
-    private int capacidad;
+    private Integer capacidad;
 
     @ManyToOne
     @JoinColumn(nullable = false)

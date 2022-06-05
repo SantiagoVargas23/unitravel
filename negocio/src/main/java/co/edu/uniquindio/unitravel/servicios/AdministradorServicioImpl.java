@@ -1,6 +1,8 @@
 package co.edu.uniquindio.unitravel.servicios;
 
-import co.edu.uniquindio.unitravel.entidades.*;
+import co.edu.uniquindio.unitravel.entidades.AdministradorHotel;
+import co.edu.uniquindio.unitravel.entidades.Ciudad;
+import co.edu.uniquindio.unitravel.entidades.Vuelo;
 import co.edu.uniquindio.unitravel.repositorios.AdministradorHotelRepo;
 import co.edu.uniquindio.unitravel.repositorios.AdministradorRepo;
 import co.edu.uniquindio.unitravel.repositorios.CiudadRepo;
@@ -8,7 +10,6 @@ import co.edu.uniquindio.unitravel.repositorios.VueloRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AdministradorServicioImpl implements AdministradorServicio{
@@ -25,32 +26,6 @@ public class AdministradorServicioImpl implements AdministradorServicio{
         this.ciudadRepo = ciudadRepo;
         this.emailServicio = emailServicio;
         this.vueloRepo = vueloRepo;
-    }
-
-
-
-    @Override
-    public Administrador validarLogin(String email, String password) throws Exception {
-        Optional<Administrador> admin = administradorRepo.findByCorreoAndPassword(email,password);
-
-        if (admin.isEmpty()){
-            throw new Exception("los datos de autenticacion son incorrectos");
-        }
-
-        return admin.get();
-    }
-
-
-
-    @Override
-    public void recuperarPassword(String email) throws Exception {
-        Optional<Administrador> adminHotel= administradorRepo.findByCorreo(email);
-        if(adminHotel.isEmpty()){
-            throw new Exception("el correo no pertenece a ningun administrador");
-        }
-        String password = adminHotel.get().getPassword();
-        emailServicio.enviarEmail("recuperacion de la contraseña ", " hola su contraseña  es"+password,email );
-
     }
 
     @Override

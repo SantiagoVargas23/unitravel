@@ -6,10 +6,6 @@ import java.util.List;
 
 public interface AdministradorServicio {
 
-    //Loguearse
-    Administrador validarLogin(String email, String password) throws Exception;
-    void recuperarPassword(String email) throws Exception;
-
     //Gestionar administradores de hotelesq
     AdministradorHotel registrarAdminHotel(AdministradorHotel adminHotel) throws Exception;
     AdministradorHotel actualizarAdminHotel(AdministradorHotel adminHotel) throws  Exception;

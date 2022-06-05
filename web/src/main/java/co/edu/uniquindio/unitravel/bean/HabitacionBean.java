@@ -1,10 +1,7 @@
 package co.edu.uniquindio.unitravel.bean;
 
-import co.edu.uniquindio.unitravel.entidades.AdministradorHotel;
-import co.edu.uniquindio.unitravel.entidades.Ciudad;
-import co.edu.uniquindio.unitravel.entidades.Hotel;
+import co.edu.uniquindio.unitravel.entidades.Habitacion;
 import co.edu.uniquindio.unitravel.servicios.AdministradorHotelServicio;
-import co.edu.uniquindio.unitravel.servicios.UnitravelServicio;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.io.IOUtils;
@@ -23,58 +20,44 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 @Component
 @ViewScoped
-public class HotelBean implements Serializable {
-
+public class HabitacionBean implements Serializable {
 
     @Getter @Setter
-    private Hotel hotel;
-
-
-    @Value("${upload.url}")
-    private String urlImagenes;
+    private Habitacion habitacion;
 
     @Getter @Setter
     private ArrayList<String> imagenes;
 
-    @Getter @Setter
-    private List<Ciudad> ciudades;
     @Autowired
     private AdministradorHotelServicio administradorHotelServicio;
 
-    @Autowired
-    private UnitravelServicio unitravelServicio;
-
+    @Value("${upload.url}")
+    private String urlImagenes;
 
     @PostConstruct
     public void inicializar(){
-        hotel = new Hotel();
+        habitacion = new Habitacion();
         imagenes = new ArrayList<>();
-        ciudades = unitravelServicio.obtenerCiudades();
     }
 
-    public String registrarHotel()
+
+    public String registrarHabitacion()
     {
         try {
 
             if(imagenes.size()>0){
 
-                AdministradorHotel admin = unitravelServicio.obtenerAdminHotel("1");
+                habitacion.setFotos(imagenes);
 
-                hotel.setAdministrador_hotel(admin);
-                hotel.setFotos(imagenes);
+                administradorHotelServicio.crearHabitacion(habitacion);
 
-                administradorHotelServicio.crearHotel(hotel);
-
-                /*FacesMessage ms = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Hotel creado correctamente");
-                FacesContext.getCurrentInstance().addMessage(null, ms);*/
                 return "registro_exitoso?faces-redirect=true";
             }else{
                 FacesMessage ms = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Alerta", "Es obligatorio subir " +
-                        "las imagenes del hotel");
+                        "las imagenes de la habitacion");
                 FacesContext.getCurrentInstance().addMessage(null, ms);
             }
 
@@ -84,6 +67,8 @@ public class HotelBean implements Serializable {
         }
         return null;
     }
+
+
 
     public void subirImagenes(FileUploadEvent event){
 

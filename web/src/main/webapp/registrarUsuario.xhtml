@@ -15,7 +15,7 @@
     <h1>Registrarse</h1>
 
     <p:panel header ="Registrate">
-        <h:form>
+        <h:form >
 
             <h:panelGrid columns="2" cellpadding="5" >
 
@@ -27,6 +27,12 @@
 
                 <p:outputLabel value="Correo: " for="email"/>
                 <p:inputText id="email" type="email" value="#{usuarioBean.usuario.correo}" required="true"/>
+
+                <p:outputLabel value="Ciudad: " for="ciudad_u" />
+                <p:selectOneMenu id="ciudad_u" value="#{usuarioBean.usuario.ciudad}" style="min-width: 200px" required="true" converter="#{ciudadConverter}">
+                    <f:selectItem  itemLabel="Ciudad " noSelectionOption="true" />
+                    <f:selectItems value="#{usuarioBean.ciudades}" var="ciudad" itemLabel="#{ciudad.nombre}" itemValue="#{ciudad}" />
+                </p:selectOneMenu>
 
                 <p:outputLabel value="Contraseña: " for="feedback" />
                 <p:password id="feedback" value="#{usuarioBean.usuario.password}" feedback="true" required="true" />

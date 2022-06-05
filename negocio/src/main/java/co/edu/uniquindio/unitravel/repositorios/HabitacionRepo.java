@@ -72,6 +72,6 @@ public interface HabitacionRepo extends JpaRepository<Habitacion, Integer> {
      * @param codHotel
      * @return
      */
-    @Query("select h from Habitacion h join  h.hotel ho where ho.codigo=:codHotel")
+    @Query("select h from Habitacion h where h.hotel.codigo=:codHotel")
     List<Habitacion> obtenerHabitacionHotel(int codHotel);
 }
